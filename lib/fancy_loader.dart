@@ -7,18 +7,41 @@ import 'package:flutter/material.dart';
 // TODO: Add support for size transitions
 enum TransitionType { scale, slide, fade, size }
 
+/// creates a [FancyLoader] widget that is used to create beautiful overlay loading animations.
 class FancyLoader {
-  final Duration duration;
+  /// The transition to be used for the [FancyLoader] widget.
+  ///
+  /// Can be either scale, slide, fade or size transitions. Must not be null.
   final TransitionType transitionType;
+
+  /// The duration of the animation to be used in [transitionType]
+  final Duration duration;
+
+  /// The widget to be passed as a child to the [FancyLoader] widget.
+  ///
+  /// This is the widget that animates
   final Widget child;
+
+  /// The amount of blur to apply to the background of the [FancyLoader] widget
   final double blurValue;
+
+  /// The background color to be used for the [FancyLoader] widget.
+  ///
+  /// This is used to fill the back of the [FancyLoader] widget.
   final Color backgroundColor;
+
+  /// The curve to be applied to the type of transition in [transitionType]
   final Curve curve;
+
+  /// The reverse curve to be applied to the type os transition in [transitionType]
+  ///
+  /// If [reverseCurve] is null, [curve] will be used as the value of the [reverseCurve].
   final Curve reverseCurve;
+
+  /// Whether the [FancyLoader] can be dismissed or not after it is showed in your widget tree.
   final bool isLoaderDismissible;
 
   const FancyLoader({
-    Key key,
     this.duration,
     this.transitionType,
     this.blurValue,
@@ -29,6 +52,9 @@ class FancyLoader {
     this.isLoaderDismissible,
   });
 
+  /// Used to show the [FancyLoader]
+  ///
+  /// the [show] method is called on the [FancyLoader] to show the [FancyLoader] in your widget tree or apps.
   void show(BuildContext context) {
     showDialog(
       context: context,
@@ -49,6 +75,9 @@ class FancyLoader {
     );
   }
 
+  /// Used to remove the [FancyLoader]
+  ///
+  /// the [dismiss] method is called on the [FancyLoader] to remove the [FancyLoader] in your widget tree or apps.
   void dismiss(BuildContext context) {
     Navigator.of(context).pop();
   }
