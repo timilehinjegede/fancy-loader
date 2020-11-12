@@ -29,16 +29,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   FancyLoader _fancyLoader = FancyLoader(
-    child: FlutterLogo(),
+    child: FlutterLogo(
+      size: 200,
+    ),
     duration: Duration(milliseconds: 750),
-    blurValue: 2.0,
-    isLoaderDismissible: false,
-    backgroundColor: Colors.black.withOpacity(0.4),
-    transitionType: TransitionType.scale,
+    // blurValue: 4.0,
+    curve: Curves.easeInOut,
+    // reverseCurve: Curves.easeInBack,
+    // backgroundColor: Colors.black.withOpacity(.65),
+    // transitionType: TransitionType.slide,
+    loaderTween: LoaderTween(
+      begin: 0.3,
+      end: 0.8,
+    ),
   );
 
   void _showFancyLoader() {
     _fancyLoader.show(context);
+    Future.delayed(Duration(seconds: 5)).whenComplete(() => _fancyLoader.dismiss(context));
   }
 
   @override
