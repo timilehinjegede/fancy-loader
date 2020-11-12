@@ -35,12 +35,15 @@ class FancyLoader {
       barrierColor: backgroundColor,
       barrierDismissible: isLoaderDismissible ?? true,
       builder: (context) {
-        return _FancyLoaderLogic(
-          duration: duration,
-          transitionType: transitionType,
-          child: child,
-          blurValue: blurValue,
-          backgroundColor: backgroundColor,
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: blurValue, sigmaY: blurValue),
+          child: _FancyLoaderLogic(
+            duration: duration,
+            transitionType: transitionType,
+            child: child,
+            blurValue: blurValue,
+            backgroundColor: backgroundColor,
+          ),
         );
       },
     );

@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
   FancyLoader _fancyLoader = FancyLoader(
     child: FlutterLogo(),
     duration: Duration(milliseconds: 750),
-    blurValue: 4.0,
+    blurValue: 2.0,
     isLoaderDismissible: false,
     backgroundColor: Colors.black.withOpacity(0.4),
     transitionType: TransitionType.scale,
