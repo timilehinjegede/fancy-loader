@@ -10,7 +10,7 @@ enum TransitionType { scale, slide, fade, size }
 class FancyLoader {
   /// creates a [FancyLoader] widget that is used to create beautiful overlay loading animations.
   const FancyLoader({
-    this.duration = const Duration(milliseconds: 750),
+  this.duration = const Duration(milliseconds: 750),
     this.transitionType = TransitionType.scale,
     this.loaderTween = const LoaderTween<double>(begin: 0.2, end: 0.8),
     this.blurValue = 4.0,
@@ -21,6 +21,14 @@ class FancyLoader {
   })  : assert(duration != null),
         assert(curve != null),
         assert(loaderTween != null);
+
+  // assert((transitionType == TransitionType.fade && transitionType == TransitionType.scale) || loaderTween is double, "A type loaderTween can't be assigned to a type double"),
+  // assert((transitionType == TransitionType.slide) && loaderTween is Offset, "A type loaderTween can't be assigned to a type Offset")
+
+  bool debugAssertIsValid() {
+    assert(true == false);
+    return false;
+  }
 
   /// The transition to be used for the [FancyLoader] widget.
   ///

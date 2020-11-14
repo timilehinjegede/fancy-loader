@@ -13,13 +13,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Fancy Loader Demo'),
+      home: const MyHomePage(title: 'Fancy Loader Demo'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -28,7 +28,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  FancyLoader _fancyLoader = FancyLoader(
+  final FancyLoader _fancyLoader = const FancyLoader(
     child: FlutterLogo(
       size: 200,
     ),
@@ -37,8 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
     curve: Curves.easeInOut,
     // reverseCurve: Curves.easeInBack,
     // backgroundColor: Colors.black.withOpacity(.65),
-    // transitionType: TransitionType.slide,
-    loaderTween: LoaderTween(
+    transitionType: TransitionType.scale,
+    loaderTween: LoaderTween<double>(
       begin: 0.3,
       end: 0.8,
     ),
@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _showFancyLoader() {
     _fancyLoader.show(context);
-    Future.delayed(Duration(seconds: 5)).whenComplete(() => _fancyLoader.dismiss(context));
+    Future<void>.delayed(const Duration(seconds: 5)).whenComplete(() => _fancyLoader.dismiss(context));
   }
 
   @override
@@ -55,11 +55,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(),
+      body: const Center(),
       floatingActionButton: FloatingActionButton(
         onPressed: _showFancyLoader,
         tooltip: 'Show Fancy Loader',
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
