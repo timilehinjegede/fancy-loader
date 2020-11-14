@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-// TODO: Add support for size transitions
+// TODO(timilehinjegede): Add support for size transitions
 enum TransitionType { scale, slide, fade, size }
 
 class FancyLoader {
@@ -32,7 +32,7 @@ class FancyLoader {
   /// Used to specify the begin and end values of the animation type used in [TransitionType].
   ///
   /// If [transitionType] is not specified and a [loaderTween] is not provided, a value of 0.2 is used for the begin value and 0.8 is used for end value.
-  final LoaderTween loaderTween;
+  final LoaderTween<double> loaderTween;
 
   /// The duration of the animation to be used in [transitionType]
   ///
@@ -66,10 +66,10 @@ class FancyLoader {
   ///
   /// the [show] method is called on the [FancyLoader] to show the [FancyLoader] in your widget tree or apps.
   void show(BuildContext context) {
-    showDialog(
+    showDialog<void>(
       context: context,
       barrierColor: backgroundColor,
-      builder: (context) {
+      builder: (_) {
         return Center(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: blurValue, sigmaY: blurValue),
@@ -99,15 +99,6 @@ class FancyLoader {
 
 /// Handles the logic of the [FancyLoader] widget.
 class _FancyLoaderLogic extends StatefulWidget {
-  final Duration duration;
-  final TransitionType transitionType;
-  final Widget child;
-  final double blurValue;
-  final Color backgroundColor;
-  final LoaderTween loaderTween;
-  final Curve curve;
-  final Curve reverseCurve;
-
   const _FancyLoaderLogic(
       {Key key,
       this.duration,
@@ -119,6 +110,15 @@ class _FancyLoaderLogic extends StatefulWidget {
       this.curve,
       this.reverseCurve})
       : super(key: key);
+
+  final Duration duration;
+  final TransitionType transitionType;
+  final Widget child;
+  final double blurValue;
+  final Color backgroundColor;
+  final LoaderTween<double> loaderTween;
+  final Curve curve;
+  final Curve reverseCurve;
 
   @override
   _FancyLoaderLogicState createState() => _FancyLoaderLogicState();
@@ -142,7 +142,7 @@ class _FancyLoaderLogicState extends State<_FancyLoaderLogic> with SingleTickerP
           opacity: _animation,
           child: child,
         );
-      // TODO: add support for size transition
+      // TODO(timilehinjegede): add support for size transition
       case TransitionType.size:
         return SizeTransition(
           sizeFactor: null,
@@ -150,7 +150,7 @@ class _FancyLoaderLogicState extends State<_FancyLoaderLogic> with SingleTickerP
         );
       case TransitionType.slide:
         return SlideTransition(
-          position: Tween(begin: Offset(.0, 2.0), end: Offset(.0, -2.0)).animate(_animation),
+          position: Tween<Offset>(begin: const Offset(.0, 2.0), end: const Offset(.0, -2.0)).animate(_animation),
           child: child,
         );
       default:
@@ -161,7 +161,7 @@ class _FancyLoaderLogicState extends State<_FancyLoaderLogic> with SingleTickerP
     }
   }
 
-  Tween _mapTransitionToLoaderTween() {
+  Tween<dynamic> _mapTransitionToLoaderTween() {
     if (widget.transitionType == TransitionType.fade || widget.transitionType == TransitionType.scale) {
       return Tween<double>(
         begin: widget.loaderTween.begin,
@@ -169,8 +169,8 @@ class _FancyLoaderLogicState extends State<_FancyLoaderLogic> with SingleTickerP
       );
     } else {
       return Tween<Offset>(
-        begin: widget.loaderTween.begin,
-        end: widget.loaderTween.end,
+        begin: const Offset(.0, .8),
+        end: const Offset(.0, -.8),
       );
     }
   }
@@ -220,8 +220,8 @@ class _FancyLoaderLogicState extends State<_FancyLoaderLogic> with SingleTickerP
 
 /// Class to hold the start and end values to be used for the scale [TransitionType] provided in the [FancyLoader]
 class LoaderTween<T extends dynamic> {
+  const LoaderTween({this.begin, this.end});
+
   final T begin;
   final T end;
-
-  const LoaderTween({this.begin, this.end});
 }
